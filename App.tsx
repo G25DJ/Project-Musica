@@ -31,7 +31,7 @@ const DEFAULT_PREFS: AppPreferences = {
   autoBackupEnabled: true,
   backupIntervalMinutes: 60,
   defaultVolume: 70,
-  allowedExtensions: ['mp3', 'wav', 'ogg', 'flac', 'm4a'],
+  allowedExtensions: ['mp3', 'wav', 'ogg', 'flac', 'm4a', 'opus'],
   autoplayOnScan: false,
   restrictedPaths: ['node_modules', 'System32', 'temp', '.git', 'AppData']
 };

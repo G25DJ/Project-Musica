@@ -1,11 +1,10 @@
 
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Scan, 
   ShieldAlert, 
   FolderSearch, 
   Loader2, 
-  CheckCircle2, 
   Terminal, 
   X, 
   Plus, 
@@ -63,9 +62,8 @@ export const Scanner: React.FC<ScannerProps> = ({
     setFilteredCount(0);
 
     const fileList = Array.from(files) as (File & { webkitRelativePath?: string })[];
-    const extensions = ['mp3', 'wav', 'ogg', 'flac', 'm4a'];
+    const extensions = ['mp3', 'wav', 'ogg', 'flac', 'm4a', 'opus'];
     
-    // Initial filter by extension
     const potentialAudio = fileList.filter(f => {
       const ext = f.name.split('.').pop()?.toLowerCase();
       return ext && extensions.includes(ext);
@@ -78,7 +76,6 @@ export const Scanner: React.FC<ScannerProps> = ({
       const relativePath = file.webkitRelativePath || file.name;
       const fullPath = `${basePath}/${relativePath}`;
       
-      // APPLY RESTRICTION CHECK
       const isRestricted = restrictedPaths.some(pattern => 
         fullPath.toLowerCase().includes(pattern.toLowerCase())
       );
@@ -89,7 +86,6 @@ export const Scanner: React.FC<ScannerProps> = ({
       }
 
       setCurrentScanningPath(fullPath);
-      
       const duration = await getAudioDuration(file);
       
       let title = file.name.replace(/\.[^/.]+$/, "");
@@ -124,8 +120,6 @@ export const Scanner: React.FC<ScannerProps> = ({
 
     setIsScanning(false);
     onScanComplete(processedSongs);
-    
-    // Reset file input for future scans
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -142,7 +136,6 @@ export const Scanner: React.FC<ScannerProps> = ({
 
   return (
     <div className="p-8 max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[60vh] relative">
-      {/* Exclusion Manager Modal */}
       {isExclusionModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
           <div className="w-full max-w-md bg-slate-900 border border-slate-800 custom-rounded shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
@@ -217,7 +210,7 @@ export const Scanner: React.FC<ScannerProps> = ({
           </div>
           <h1 className="text-4xl font-bold text-white tracking-tight">Audio Metadata Indexer</h1>
           <p className="text-slate-400 text-lg max-w-xl mx-auto">
-            Scan your PC for .mp3, .wav, .ogg, .flac, and .m4a files.
+            Scan your PC for .mp3, .wav, .ogg, .flac, .m4a, and .opus files.
           </p>
 
           <div className="max-w-md mx-auto space-y-4">
@@ -268,7 +261,7 @@ export const Scanner: React.FC<ScannerProps> = ({
             ref={fileInputRef} 
             className="hidden" 
             multiple 
-            {...({ webkitdirectory: "true" } as any)} 
+            {...({ webkitdirectory: "", directory: "" } as any)}
             onChange={startScan}
           />
         </div>

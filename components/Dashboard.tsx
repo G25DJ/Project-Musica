@@ -22,9 +22,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ songs, backupLogs, onNavig
     { name: 'MP3', value: songs.filter(s => s.format === 'mp3').length },
     { name: 'WAV', value: songs.filter(s => s.format === 'wav').length },
     { name: 'OGG', value: songs.filter(s => s.format === 'ogg').length },
+    { name: 'OPUS', value: songs.filter(s => s.format === 'opus').length },
+    { name: 'FLAC', value: songs.filter(s => s.format === 'flac').length },
   ].filter(d => d.value > 0);
 
-  const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444'];
+  const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#a855f7'];
 
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
